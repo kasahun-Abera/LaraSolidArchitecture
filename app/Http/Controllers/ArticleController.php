@@ -56,6 +56,11 @@ class ArticleController extends Controller
     public function update(UpdateArticleRequest $request, Article $article)
     {
         //
+        $data = $request->all();
+        $article = $this->articleORM->updateArticle($article->id, $data);
+        return response()->json([
+            'data' => $article
+        ]);
     }
 
     /**
