@@ -5,15 +5,25 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
-
+use App\interfaces\ArticleInterface;
 class ArticleController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    private ArticleInterface $articleORM;
+    public function __construct(ArticleInterface $articleORM)
+    {
+        $this->articleORM = $articleORM;
+    }
+
     public function index()
     {
         //
+        $article = $this->articleORM->getArticles();
+        return response()->json([
+            'data' => $article
+        ]);
     }
 
     /**
@@ -22,6 +32,11 @@ class ArticleController extends Controller
     public function store(StoreArticleRequest $request)
     {
         //
+        $alldata =  $request->all();
+        $article = $this->articleORM->createArticle($alldata);
+        return response()->json([
+            'article' => $article
+        ]);
     }
 
     /**
@@ -30,6 +45,9 @@ class ArticleController extends Controller
     public function show(Article $article)
     {
         //
+        return response()->json([
+            'article' => $article
+        ]);
     }
 
     /**
@@ -46,5 +64,8 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         //
+        return response()->json([
+            'article' => $article->delete()
+        ]);
     }
 }
