@@ -6,7 +6,7 @@ use App\Models\Article;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use App\interfaces\ArticleInterface;
-class ArticleController extends Controller
+ class ArticleController extends Controller
 {
     /**
      * Display a listing of the resource.
